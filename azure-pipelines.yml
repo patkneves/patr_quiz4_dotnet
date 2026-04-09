@@ -40,20 +40,15 @@ stages:
         platform: '$(buildPlatform)'
         configuration: '$(buildConfiguration)'
 
-- stage: Pack
+- stage: PackAndPush
   jobs:
-  - job: Pack
+  - job: PackAndPush
     steps:
     - task: DotNetCoreCLI@2
       inputs:
         command: 'pack'
         packagesToPack: '**/*.csproj'
         versioningScheme: 'off'
-
-- stage: Push
-  jobs:
-  - job: Push
-    steps:
     - task: NuGetCommand@2
       inputs:
         command: 'push'
@@ -61,4 +56,3 @@ stages:
         nuGetFeedType: 'internal'
         publishVstsFeed: '38c78008-2919-4d51-8286-54415c7d7b78'
         allowPackageConflicts: true
-        
